@@ -66,10 +66,8 @@ void makeAccount()
 
     listOfAccountUsernames.push_back(userName);
     listOfAccountPasswords.push_back(password);
-    if (!checkIfCorrectAccount(userName, password)) {
-        cout << "New account created";
-        showOptions();
-    } 
+    cout << "New account created\n";
+    showOptions();
 }
 
 void depositAnAmount()
@@ -82,7 +80,9 @@ void depositAnAmount()
     cout << "Enter your password\n";
     cin >> enteredPassword;
 
-    if (checkIfCorrectAccount(enteredUsername, enteredPassword))
+    bool checkIfValidAccount = checkIfCorrectAccount(enteredUsername, enteredPassword);
+
+    if (checkIfValidAccount == true)
     {
         int amountYouWantToDeposit;
         cout << "How much would you like to deposit?\n";
@@ -103,6 +103,9 @@ int indexOfWantedAccount(string a)
         if (listOfAccountUsernames[i] == a) {
             return i;
         }
+        else {
+            return 0;
+        }
     }
 }
 
@@ -118,6 +121,9 @@ bool checkIfCorrectAccount(string a, string b)
         {
             username = true;
         }
+        else {
+            username = false;
+        }
     }
 
     int lengthOfPasswordArray = sizeof(listOfAccountPasswords);
@@ -126,6 +132,9 @@ bool checkIfCorrectAccount(string a, string b)
         if (listOfAccountPasswords[j] == b)
         {
             Password = true;
+        }
+        else {
+            username = false;
         }
     }
 
