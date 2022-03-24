@@ -17,15 +17,25 @@ vector<string> listOfAccountUsernames;
 vector<string> listOfAccountPasswords;
 vector<int> listOfDepositedValues;
 
+void showOptions();
+void processChosenOption();
+void makeAccount();
+void depositAnAmount();
+int indexOfWantedAccount(string a);
+bool checkIfCorrectAccount(string a, string b);
+
 int main()
 {
+    showOptions();
+    return 0;
+}
+
+void showOptions() {
     cout << "1. New acoount\n";
     cout << "2. Deposit amount\n";
     cout << "Pick an option\n";
     cin >> chosenOption;
     processChosenOption();
-
-    return 0;
 }
 
 void processChosenOption()
@@ -56,6 +66,10 @@ void makeAccount()
 
     listOfAccountUsernames.push_back(userName);
     listOfAccountPasswords.push_back(password);
+    if (!checkIfCorrectAccount(userName, password)) {
+        cout << "New account created";
+        showOptions();
+    } 
 }
 
 void depositAnAmount()
@@ -75,14 +89,23 @@ void depositAnAmount()
         cin >> amountYouWantToDeposit;
         int indexOfThing = indexOfWantedAccount(enteredUsername);
         listOfDepositedValues.push_back(amountYouWantToDeposit);
+        showOptions();
+    }
+    else {
+        cout << "Wrong username or password";
+        depositAnAmount();
     }
 }
 
 int indexOfWantedAccount(string a)
 {
-    auto indexOfTheThing = find(listOfAccountUsernames.begin(), listOfAccountUsernames.end(), a);
-    return indexOfTheThing;
+    for (int i = 0; i < sizeof(listOfAccountUsernames); i++) {
+        if (listOfAccountUsernames[i] == a) {
+            return i;
+        }
+    }
 }
+
 
 bool checkIfCorrectAccount(string a, string b)
 {
