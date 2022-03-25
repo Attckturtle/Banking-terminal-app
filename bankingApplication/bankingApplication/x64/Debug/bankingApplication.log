@@ -1,4 +1,2 @@
 ﻿  bankingApplication.cpp
-C:\Users\65881\OneDrive\Desktop\C++\bankingApplication\bankingApplication\bankingApplication.cpp(145): warning C4715: 'checkIfCorrectAccount': not all control paths return a value
-C:\Users\65881\OneDrive\Desktop\C++\bankingApplication\bankingApplication\bankingApplication.cpp(110): warning C4715: 'indexOfWantedAccount': not all control paths return a value
   bankingApplication.vcxproj -> C:\Users\65881\OneDrive\Desktop\C++\bankingApplication\x64\Debug\bankingApplication.exe

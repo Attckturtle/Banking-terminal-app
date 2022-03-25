@@ -5,14 +5,21 @@
 #include <algorithm>
 #include <vector>
 #include <iterator>
+#include <functional>
 using namespace std;
 
 string enteredUsername;
 string enteredPassword;
 
+
+bool validAccount;
+
 bool makingAccount;
 bool isAccountCorrect;
 int chosenOption;
+bool correctAccount;
+int indexOfThing;
+
 vector<string> listOfAccountUsernames;
 vector<string> listOfAccountPasswords;
 vector<int> listOfDepositedValues;
@@ -21,8 +28,8 @@ void showOptions();
 void processChosenOption();
 void makeAccount();
 void depositAnAmount();
-int indexOfWantedAccount(string a);
-bool checkIfCorrectAccount(string a, string b);
+void indexOfWantedAccount();
+void checkIfCorrectAccount();
 
 int main()
 {
@@ -72,52 +79,47 @@ void makeAccount()
 
 void depositAnAmount()
 {
-    string enteredUsername;
     cout << "Enter your username\n";
     cin >> enteredUsername;
 
-    string enteredPassword;
     cout << "Enter your password\n";
     cin >> enteredPassword;
 
-    bool checkIfValidAccount = checkIfCorrectAccount(enteredUsername, enteredPassword);
-
-    if (checkIfValidAccount == true)
+    if (validAccount)
     {
         int amountYouWantToDeposit;
         cout << "How much would you like to deposit?\n";
         cin >> amountYouWantToDeposit;
-        int indexOfThing = indexOfWantedAccount(enteredUsername);
         listOfDepositedValues.push_back(amountYouWantToDeposit);
         showOptions();
     }
     else {
-        cout << "Wrong username or password";
+        cout << "Wrong username or password\n";
         depositAnAmount();
     }
 }
 
-int indexOfWantedAccount(string a)
+void indexOfWantedAccount()
 {
     for (int i = 0; i < sizeof(listOfAccountUsernames); i++) {
-        if (listOfAccountUsernames[i] == a) {
-            return i;
+        if (listOfAccountUsernames[i] == enteredUsername) {
+            indexOfThing = i;
         }
         else {
-            return 0;
+            indexOfThing = 0;
         }
     }
 }
 
 
-bool checkIfCorrectAccount(string a, string b)
+void checkIfCorrectAccount()
 {
     bool username = false;
     bool Password = false;
     int lengthOfUsernameArray = sizeof(listOfAccountUsernames);
     for (int i = 0; i < lengthOfUsernameArray; i++)
     {
-        if (listOfAccountUsernames[i] == a)
+        if (listOfAccountUsernames[i] == enteredUsername)
         {
             username = true;
         }
@@ -129,7 +131,7 @@ bool checkIfCorrectAccount(string a, string b)
     int lengthOfPasswordArray = sizeof(listOfAccountPasswords);
     for (int j = 0; j < lengthOfPasswordArray; j++)
     {
-        if (listOfAccountPasswords[j] == b)
+        if (listOfAccountPasswords[j] == enteredPassword)
         {
             Password = true;
         }
@@ -138,8 +140,11 @@ bool checkIfCorrectAccount(string a, string b)
         }
     }
 
-    if (username && Password)
+    if (username == true && Password == true)
     {
-        return true;
+        validAccount = true;
+    }
+    else {
+        validAccount = false;
     }
 }
