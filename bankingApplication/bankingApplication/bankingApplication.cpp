@@ -101,7 +101,7 @@ void depositAnAmount()
 
 void indexOfWantedAccount()
 {
-    for (int i = 0; i < sizeof(listOfAccountUsernames); i++) {
+    for (int i = 0; i < listOfAccountUsernames.size(); i++) {
         if (listOfAccountUsernames[i] == enteredUsername) {
             indexOfThing = i;
         }
@@ -116,8 +116,7 @@ void checkIfCorrectAccount()
 {
     bool username = false;
     bool Password = false;
-    int lengthOfUsernameArray = sizeof(listOfAccountUsernames);
-    for (int i = 0; i < lengthOfUsernameArray; i++)
+    for (int i = 0; i < listOfAccountUsernames.size(); i++)
     {
         if (listOfAccountUsernames[i] == enteredUsername)
         {
@@ -128,8 +127,7 @@ void checkIfCorrectAccount()
         }
     }
 
-    int lengthOfPasswordArray = sizeof(listOfAccountPasswords);
-    for (int j = 0; j < lengthOfPasswordArray; j++)
+    for (int j = 0; j < listOfAccountPasswords.size(); j++)
     {
         if (listOfAccountPasswords[j] == enteredPassword)
         {
