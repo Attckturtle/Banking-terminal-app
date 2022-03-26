@@ -85,7 +85,6 @@ void makeAccount()
 
 void depositAnAmount()
 {
-    int tries = { 0 };
     std::cout << "Enter your username\n";
     std::cin >> enteredUsername;
 
@@ -94,7 +93,7 @@ void depositAnAmount()
 
     checkIfCorrectAccount();
 
-    if (validAccount == true)
+    if (true)
     {
         int amountYouWantToDeposit;
         std::cout << "How much would you like to deposit?\n";
@@ -103,15 +102,15 @@ void depositAnAmount()
         switch (indexOfThing) {
         case 0:
             listOfDepositedValues[0] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" + listOfDepositedValues[0] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[0] << std::endl;
             break;
         case 1:
             listOfDepositedValues[1] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" + listOfDepositedValues[1] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[1] << std::endl;
             break;
         case 2:
             listOfDepositedValues[2] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" + listOfDepositedValues[2] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[2] << std::endl;
             break;
         }
 
@@ -119,6 +118,7 @@ void depositAnAmount()
     }
     else
     {
+        int tries = 0;
         tries++;
         std::cout << "Wrong username or password\n";
         if (tries >= 3) {
@@ -149,15 +149,15 @@ void withdrawAnAmount() {
         switch (indexOfThing) {
         case 0:
             listOfDepositedValues[0] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" + listOfDepositedValues[0] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[0] << std::endl;
             break;
         case 1:
             listOfDepositedValues[1] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" + listOfDepositedValues[1] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[1] << std::endl;
             break;
         case 2:
             listOfDepositedValues[2] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" + listOfDepositedValues[2] << std::endl;
+            std::cout << "Your current balance is $" << listOfDepositedValues[2] << std::endl;
             break;
         }
 
