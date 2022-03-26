@@ -20,6 +20,7 @@ void processChosenOption(int a);
 void makeAccount();
 void depositAnAmount();
 void withdrawAnAmount();
+void playTheLottery();
 void indexOfWantedAccount(std::string a);
 void checkIfCorrectAccount(std::string a, std::string b);
 
@@ -34,6 +35,7 @@ void showOptions()
     std::cout << "1. New acoount\n";
     std::cout << "2. Deposit amount\n";
     std::cout << "3. Withdraw amount\n";
+    std::cout << "4. Play lottery\n";
     std::cout << "Pick an option\n";
     int chosenOption;
     std::cin >> chosenOption;
@@ -53,6 +55,8 @@ void processChosenOption(int a)
     case 3:
         withdrawAnAmount();
         break;
+    case 4:
+        playTheLottery();
     default:
         std::cout << "Please pick a valid option\n";
         showOptions();
@@ -174,6 +178,47 @@ void withdrawAnAmount()
         else
         {
             withdrawAnAmount();
+        }
+    }
+}
+
+void playTheLottery() {
+    std::cout << "Enter your username\n";
+    std::cin >> enteredUsername;
+
+    std::cout << "Enter your password\n";
+    std::cin >> enteredPassword;
+
+    indexOfWantedAccount(enteredUsername);
+    checkIfCorrectAccount(enteredUsername, enteredPassword);
+    if (validAccount) {
+        int lotteryResults;
+        int lotteryTicketCost = 5;
+        if (listOfDepositedValues[indexOfThing] < 5) {
+        }
+        else if (listOfDepositedValues[indexOfThing] > 5) {
+            int a;
+            a = rand() % 1000 + 1;
+            if (a == 1) {
+                lotteryResults = 500000;
+                listOfDepositedValues[indexOfThing] += lotteryResults;
+                std::cout << "You win!\n";
+            }
+            else {
+                char tryAgain;
+                std::cout << "You lose\n";
+                std::cout << "Try Again?\n" << "T/F";
+                std::cin >> tryAgain;
+                tryAgain = toupper(tryAgain);
+                switch (tryAgain) {
+                case 'T':
+                    playTheLottery();
+                    break;
+                case 'F':
+                    showOptions();
+                    break;
+                }
+            }
         }
     }
 }
