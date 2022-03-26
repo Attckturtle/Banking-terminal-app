@@ -6,11 +6,9 @@
 #include <vector>
 #include <iterator>
 #include <functional>
-using namespace std;
 
-string enteredUsername;
-string enteredPassword;
-
+std::string enteredUsername;
+std::string enteredPassword;
 
 bool validAccount;
 
@@ -20,14 +18,15 @@ int chosenOption;
 bool correctAccount;
 int indexOfThing;
 
-vector<string> listOfAccountUsernames;
-vector<string> listOfAccountPasswords;
-vector<int> listOfDepositedValues;
+std::vector<std::string> listOfAccountUsernames;
+std::vector<std::string> listOfAccountPasswords;
+std::vector<int> listOfDepositedValues;
 
 void showOptions();
 void processChosenOption();
 void makeAccount();
 void depositAnAmount();
+void withdrawAnAmount();
 void indexOfWantedAccount();
 void checkIfCorrectAccount();
 
@@ -37,11 +36,13 @@ int main()
     return 0;
 }
 
-void showOptions() {
-    cout << "1. New acoount\n";
-    cout << "2. Deposit amount\n";
-    cout << "Pick an option\n";
-    cin >> chosenOption;
+void showOptions()
+{
+    std::cout << "1. New acoount\n";
+    std::cout << "2. Deposit amount\n";
+    std::cout << "3. Withdraw amount\n";
+    std::cout << "Pick an option\n";
+    std::cin >> chosenOption;
     processChosenOption();
 }
 
@@ -56,93 +57,162 @@ void processChosenOption()
     case 2:
         depositAnAmount();
         break;
+    case 3:
+        withdrawAnAmount();
+        break;
     default:
-        cout << "Please pick a valid option\n";
+        std::cout << "Please pick a valid option\n";
     }
 }
 
 void makeAccount()
 {
-    cout << "Enter a username\n";
-    string userName;
-    cin >> userName;
+    std::cout << "Enter a username\n";
+    std::string userName;
+    std::cin >> userName;
 
-    cout << "Enter a password\n";
-    string password;
-    cin >> password;
+    std::cout << "Enter a password\n";
+    std::string password;
+    std::cin >> password;
 
     listOfAccountUsernames.push_back(userName);
     listOfAccountPasswords.push_back(password);
-    cout << "New account created\n";
+    listOfDepositedValues.push_back(0);
+
+    std::cout << "New account created\n";
     showOptions();
 }
 
 void depositAnAmount()
 {
-    cout << "Enter your username\n";
-    cin >> enteredUsername;
+    int tries = {0};
+    std::cout << "Enter your username\n";
+    std::cin >> enteredUsername;
 
-    cout << "Enter your password\n";
-    cin >> enteredPassword;
+    std::cout << "Enter your password\n";
+    std::cin >> enteredPassword;
 
-    if (validAccount)
+    checkIfCorrectAccount();
+
+    if (validAccount ==  true)
     {
         int amountYouWantToDeposit;
-        cout << "How much would you like to deposit?\n";
-        cin >> amountYouWantToDeposit;
-        listOfDepositedValues.push_back(amountYouWantToDeposit);
+        std::cout << "How much would you like to deposit?\n";
+        std::cin >> amountYouWantToDeposit;
+
+        switch (indexOfThing) {
+        case 0:
+            listOfDepositedValues[0] += amountYouWantToDeposit;
+            std::cout << "Your current balance is $" + listOfDepositedValues[0] << std::endl;
+            break;
+        case 1:
+            listOfDepositedValues[1] += amountYouWantToDeposit;
+            std::cout << "Your current balance is $" + listOfDepositedValues[1] << std::endl;
+            break;
+        case 2:
+            listOfDepositedValues[2] += amountYouWantToDeposit;
+            std::cout << "Your current balance is $" + listOfDepositedValues[2] << std::endl;
+            break;
+        }
+
         showOptions();
     }
-    else {
-        cout << "Wrong username or password\n";
-        depositAnAmount();
+    else
+    {
+        tries++;
+        std::cout << "Wrong username or password\n";
+        if (tries >= 3) {
+            std::cout << "Locking all acounts";
+        }
+        else {
+            depositAnAmount();
+        }
+    }
+}
+
+void withdrawAnAmount() {
+    int tries = { 0 };
+    std::cout << "Enter your username\n";
+    std::cin >> enteredUsername;
+
+    std::cout << "Enter your password\n";
+    std::cin >> enteredPassword;
+
+    checkIfCorrectAccount();
+
+    if (validAccount ==  true)
+    {
+        int amountYouWantToWithdraw;
+        std::cout << "How much would you like to withdraw?\n";
+        std::cin >> amountYouWantToWithdraw;
+
+        switch (indexOfThing) {
+        case 0:
+            listOfDepositedValues[0] -= amountYouWantToWithdraw;
+            std::cout << "Your current balance is $" + listOfDepositedValues[0] << std::endl;
+            break;
+        case 1:
+            listOfDepositedValues[1] -= amountYouWantToWithdraw;
+            std::cout << "Your current balance is $" + listOfDepositedValues[1] << std::endl;
+            break;
+        case 2:
+            listOfDepositedValues[2] -= amountYouWantToWithdraw;
+            std::cout << "Your current balance is $" + listOfDepositedValues[2] << std::endl;
+            break;
+        }
+
+        showOptions();
+    }
+    else
+    {
+        tries++;
+        std::cout << "Wrong username or password\n";
+        if (tries >= 3) {
+            std::cout << "Locking all acounts";
+        }
+        else {
+            withdrawAnAmount();
+        }
     }
 }
 
 void indexOfWantedAccount()
 {
-    for (int i = 0; i < listOfAccountUsernames.size(); i++) {
-        if (listOfAccountUsernames[i] == enteredUsername) {
+    for (int i = 0; i < listOfAccountUsernames.size(); i++)
+    {
+        if (listOfAccountUsernames[i] == enteredUsername)
+        {
             indexOfThing = i;
         }
-        else {
-            indexOfThing = 0;
-        }
+    }
+    if (indexOfThing == NULL) {
+        indexOfThing = 0;
     }
 }
-
 
 void checkIfCorrectAccount()
 {
     bool username = false;
     bool Password = false;
-    for (int i = 0; i < listOfAccountUsernames.size(); i++)
+    for (int i = -1; i <= listOfAccountUsernames.size(); i++)
     {
         if (listOfAccountUsernames[i] == enteredUsername)
         {
             username = true;
         }
-        else {
-            username = false;
-        }
-    }
 
-    for (int j = 0; j < listOfAccountPasswords.size(); j++)
-    {
-        if (listOfAccountPasswords[j] == enteredPassword)
+        if (listOfAccountPasswords[i] == enteredPassword)
         {
             Password = true;
         }
-        else {
-            username = false;
-        }
     }
 
-    if (username == true && Password == true)
-    {
-        validAccount = true;
-    }
-    else {
-        validAccount = false;
-    }
+        if (username == true && Password == true)
+        {
+            validAccount = true;
+        }
+        else
+        {
+            validAccount = false;
+        }
 }
