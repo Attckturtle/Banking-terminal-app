@@ -93,7 +93,7 @@ void depositAnAmount()
 
     checkIfCorrectAccount();
 
-    if (true)
+    if (validAccount)
     {
         int amountYouWantToDeposit;
         std::cout << "How much would you like to deposit?\n";
@@ -131,7 +131,6 @@ void depositAnAmount()
 }
 
 void withdrawAnAmount() {
-    int tries = { 0 };
     std::cout << "Enter your username\n";
     std::cin >> enteredUsername;
 
@@ -140,7 +139,7 @@ void withdrawAnAmount() {
 
     checkIfCorrectAccount();
 
-    if (validAccount == true)
+    if (validAccount)
     {
         int amountYouWantToWithdraw;
         std::cout << "How much would you like to withdraw?\n";
@@ -165,6 +164,7 @@ void withdrawAnAmount() {
     }
     else
     {
+        int tries = 0;
         tries++;
         std::cout << "Wrong username or password\n";
         if (tries >= 3) {
@@ -207,7 +207,7 @@ void checkIfCorrectAccount()
         }
     }
 
-    if (username == true && Password == true)
+    if (username && Password)
     {
         validAccount = true;
     }
