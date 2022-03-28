@@ -5,13 +5,7 @@
 std::string enteredUsername;
 std::string enteredPassword;
 
-bool validAccount;
-bool makingAccount;
-bool isAccountCorrect;
-bool correctAccount;
-
-int indexOfThing;
-int tries = 0;
+int indexOfBankThing;
 
 std::vector<std::string> listOfAccountUsernames;
 std::vector<std::string> listOfAccountPasswords;
@@ -27,7 +21,7 @@ void depositAnAmount();
 void withdrawAnAmount();
 void playTheLottery();
 void indexOfWantedAccount(std::string a);
-void checkIfCorrectAccount(std::string a, std::string b);
+bool checkIfCorrectAccount(std::string a, std::string b);
 
 int main()
 {
@@ -80,6 +74,8 @@ void makeAccount()
 }
 
 void login() {
+    bool validAccount;
+
     std::cout << "Enter your username\n";
     std::cin >> enteredUsername;
 
@@ -87,9 +83,13 @@ void login() {
     std::cin >> enteredPassword;
 
     indexOfWantedAccount(enteredUsername);
-    checkIfCorrectAccount(enteredUsername, enteredPassword);
+    validAccount = checkIfCorrectAccount(enteredUsername, enteredPassword);
     if (validAccount) {
         afterLoginScreen();
+    }
+    else {
+        std::cout << "Try again";
+        login();
     }
 }
 
@@ -116,77 +116,40 @@ void processSecondChosenOption(int a) {
         break;
     default:
         std::cout << "Pick a valid option";
+        processSecondChosenOption(a);
     }
 }
 
 void depositAnAmount()
 {
-    if (validAccount)
-    {
-        int amountYouWantToDeposit;
-        std::cout << "How much would you like to deposit?\n";
-        std::cin >> amountYouWantToDeposit;
-
-        switch (indexOfThing)
-        {
-        case 0:
-            listOfDepositedValues[0] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" << listOfDepositedValues[0] << std::endl;
-            break;
-        case 1:
-            listOfDepositedValues[1] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" << listOfDepositedValues[1] << std::endl;
-            break;
-        case 2:
-            listOfDepositedValues[2] += amountYouWantToDeposit;
-            std::cout << "Your current balance is $" << listOfDepositedValues[2] << std::endl;
-            break;
-        }
-
-        afterLoginScreen();
-    }
+    int amountYouWantToDeposit;
+    std::cout << "How much would you like to deposit?\n";
+    std::cin >> amountYouWantToDeposit;
+    std::cout << "Your current balance is $" << listOfDepositedValues[indexOfBankThing] << std::endl;
+    afterLoginScreen();
 }
 
 void withdrawAnAmount()
 {
-    if (validAccount)
-    {
-        int amountYouWantToWithdraw;
-        std::cout << "How much would you like to withdraw?\n";
-        std::cin >> amountYouWantToWithdraw;
-
-        switch (indexOfThing)
-        {
-        case 0:
-            listOfDepositedValues[0] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" << listOfDepositedValues[0] << std::endl;
-            break;
-        case 1:
-            listOfDepositedValues[1] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" << listOfDepositedValues[1] << std::endl;
-            break;
-        case 2:
-            listOfDepositedValues[2] -= amountYouWantToWithdraw;
-            std::cout << "Your current balance is $" << listOfDepositedValues[2] << std::endl;
-            break;
-        }
-
-        afterLoginScreen();
-    }
+    int amountYouWantToWithdraw;
+    std::cout << "How much would you like to withdraw?\n";
+    std::cin >> amountYouWantToWithdraw;
+    std::cout << "Your current balance is $" << listOfDepositedValues[indexOfBankThing] << std::endl;
+    afterLoginScreen();
 }
 
 void playTheLottery() {
     if (true) {
         int lotteryResults;
         int lotteryTicketCost = 5;
-        if (listOfDepositedValues[indexOfThing] < 5) {
+        if (listOfDepositedValues[indexOfBankThing] < 5) {
         }
-        else if (listOfDepositedValues[indexOfThing] > 5) {
+        else if (listOfDepositedValues[indexOfBankThing] > 5) {
             int a;
             a = rand() % 1000 + 1;
             if (a == 1) {
                 lotteryResults = 500000;
-                listOfDepositedValues[indexOfThing] += lotteryResults;
+                listOfDepositedValues[indexOfBankThing] += lotteryResults;
                 std::cout << "You win!\n";
             }
             else {
@@ -200,7 +163,6 @@ void playTheLottery() {
                     playTheLottery();
                     break;
                 case 'F':
-                    std::cout << "show options";
                     afterLoginScreen();
                     break;
                 }
@@ -215,16 +177,16 @@ void indexOfWantedAccount(std::string a)
     {
         if (listOfAccountUsernames[i] == a)
         {
-            indexOfThing = i;
+            indexOfBankThing = i;
         }
     }
-    if (indexOfThing == NULL)
+    if (indexOfBankThing == NULL)
     {
-        indexOfThing = 0;
+        indexOfBankThing = 0;
     }
 }
 
-void checkIfCorrectAccount(std::string a, std::string b)
+bool checkIfCorrectAccount(std::string a, std::string b)
 {
     bool usernameValid;
     bool passwordValid;
@@ -244,9 +206,9 @@ void checkIfCorrectAccount(std::string a, std::string b)
     }
 
     if (usernameValid && passwordValid) {
-        validAccount = true;
+        return true;
     }
-    else if (!usernameValid && !passwordValid) {
-        validAccount = false;
+    else {
+        return false;
     }
 }
