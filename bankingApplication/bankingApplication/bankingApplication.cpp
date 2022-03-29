@@ -11,24 +11,6 @@ std::vector<std::string> listOfAccountUsernames;
 std::vector<std::string> listOfAccountPasswords;
 std::vector<int> listOfDepositedValues;
 
-void showOptions();
-void processChosenOption(int a);
-void makeAccount();
-void login();
-void afterLoginScreen();
-void processSecondChosenOption(int a);
-void depositAnAmount();
-void withdrawAnAmount();
-void playTheLottery();
-void indexOfWantedAccount(std::string a);
-bool checkIfCorrectAccount(std::string a, std::string b);
-
-int main()
-{
-    showOptions();
-    return 0;
-}
-
 void showOptions()
 {
     std::cout << "1. New acoount\n";
@@ -100,11 +82,7 @@ void afterLoginScreen() {
     std::cout << "Pick an option\n";
     int chosenOption;
     std::cin >> chosenOption;
-    processSecondChosenOption(chosenOption);
-}
-
-void processSecondChosenOption(int a) {
-    switch (a) {
+    switch (chosenOption) {
     case 1:
         depositAnAmount();
         break;
@@ -116,7 +94,7 @@ void processSecondChosenOption(int a) {
         break;
     default:
         std::cout << "Pick a valid option";
-        processSecondChosenOption(a);
+        afterLoginScreen();
     }
 }
 
@@ -125,6 +103,7 @@ void depositAnAmount()
     int amountYouWantToDeposit;
     std::cout << "How much would you like to deposit?\n";
     std::cin >> amountYouWantToDeposit;
+    listOfDepositedValues[indexOfBankThing] += amountYouWantToDeposit;
     std::cout << "Your current balance is $" << listOfDepositedValues[indexOfBankThing] << std::endl;
     afterLoginScreen();
 }
@@ -134,6 +113,7 @@ void withdrawAnAmount()
     int amountYouWantToWithdraw;
     std::cout << "How much would you like to withdraw?\n";
     std::cin >> amountYouWantToWithdraw;
+    listOfDepositedValues[indexOfBankThing] -= amountYouWantToWithdraw;
     std::cout << "Your current balance is $" << listOfDepositedValues[indexOfBankThing] << std::endl;
     afterLoginScreen();
 }
@@ -211,4 +191,10 @@ bool checkIfCorrectAccount(std::string a, std::string b)
     else {
         return false;
     }
+}
+
+int main()
+{
+    showOptions();
+    return 0;
 }
